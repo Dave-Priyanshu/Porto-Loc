@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced Items with Glowing Borders</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #000;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: row;
+            gap: 3%;
+            flex-wrap: wrap;
+            width: 90vw;
+            height: 90vh;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .item {
+            position: relative;
+            background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
+            color: #ddd;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            box-sizing: border-box;
+            /* Glowing left border using box-shadow */
+            box-shadow: -3px 0 8px rgba(100, 150, 255, 0.5);
+            transition: box-shadow 0.7s ease-in-out, transform 0.3s ease;
+        }
+
+        /* Top-left half border with fade effect */
+        .item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 50%;
+            height: 2px;
+            background: linear-gradient(to right, transparent, rgba(100, 150, 255, 0.8), transparent);
+            transition: left 0.7s ease-in-out;
+        }
+
+        /* Bottom-left small border with fade effect */
+        .item::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 25%;
+            height: 2px;
+            background: linear-gradient(to right, transparent, rgba(100, 150, 255, 0.8), transparent);
+            transition: left 0.7s ease-in-out;
+        }
+
+        /* Hover effects */
+        .item:hover {
+            /* Switch glow to the right side */
+            box-shadow: 3px 0 8px rgba(100, 150, 255, 0.5);
+            transform: scale(1.05); /* Slight scale on hover */
+        }
+
+        .item:hover::before {
+            left: 50%; /* Move to the right half for top border */
+        }
+
+        .item:hover::after {
+            left: 75%; /* Move to the right 25% for bottom border */
+        }
+
+        /* Item-specific dimensions */
+        .item:nth-child(1),
+        .item:nth-child(5),
+        .item:nth-child(7) {
+            height: 32%;
+            width: 40%;
+        }
+
+        .item:nth-child(2),
+        .item:nth-child(8) {
+            height: 32%;
+            width: 30%;
+        }
+
+        .item:nth-child(3),
+        .item:nth-child(6),
+        .item:nth-child(9) {
+            height: 32%;
+            flex-grow: 1;
+        }
+
+        .item:nth-child(4) {
+            height: 32%;
+            width: 25%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="item">1</div>
+        <div class="item">2</div>
+        <div class="item">3</div>
+        <div class="item">4</div>
+        <div class="item">5</div>
+        <div class="item">6</div>
+        <div class="item">7</div>
+        <div class="item">8</div>
+        <div class="item">9</div>
+    </div>
+</body>
+</html>

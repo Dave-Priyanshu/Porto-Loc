@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Single Item with Border Animation</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #0a0a0a;
+            font-family: 'Roboto', 'Inter', sans-serif;
+        }
+
+        .item {
+            position: relative;
+            background-color: #1f1f1f;
+            color: #e0e0e0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            font-weight: 600;
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            box-sizing: border-box;
+            width: 40%;
+            height: 32%;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+        }
+
+        /* Top border with gradient */
+        .item .top-border {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 50%;
+            height: 2px;
+            background: linear-gradient(to right, transparent, #b0b0b0, transparent);
+            transition: left 0.5s ease;
+        }
+
+        /* Bottom border with gradient */
+        .item .bottom-border {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 25%;
+            height: 2px;
+            background: linear-gradient(to right, transparent, #b0b0b0, transparent);
+            transition: left 0.5s ease;
+        }
+
+        /* Left vertical border */
+        .item .left-border {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(to bottom, transparent, #b0b0b0, transparent);
+            box-shadow: 0 0 6px rgba(176, 176, 176, 0.3);
+            transition: opacity 0.5s ease;
+        }
+
+        /* Right vertical border (hidden by default) */
+        .item .right-border {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(to bottom, transparent, #b0b0b0, transparent);
+            box-shadow: 0 0 6px rgba(176, 176, 176, 0.3);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        /* Hover effects */
+        .item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+            background-color: #252525;
+        }
+
+        .item:hover .top-border {
+            left: 50%;
+        }
+
+        .item:hover .bottom-border {
+            left: 75%;
+        }
+
+        .item:hover .left-border {
+            opacity: 0;
+        }
+
+        .item:hover .right-border {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="item">
+        1
+        <div class="top-border"></div>
+        <div class="bottom-border"></div>
+        <div class="left-border"></div>
+        <div class="right-border"></div>
+    </div>
+</body>
+</html>
