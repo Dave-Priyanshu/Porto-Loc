@@ -1,0 +1,133 @@
+-- Task - 12th May --
+1. colours nakki karvano che - final(blue and white is final and ek hju nakki karvani che) -https://colorhunt.co/palette/21344854779294b4c1ecefca 
+2. buttons imporvement 
+3. login & register page change karo - https://codepen.io/FlorinPop17/pen/vPKWjd
+4. guiding tour improvements
+5. side bar circle improvments
+6. make changes in the "missing details section"
+7. About page section in every page 
+8. BirthDay wishes
+
+
+
+----
+Thank you for the feedback! I understand the issues:
+
+    Sign Up Form Positioning on Mobile: When clicking the "Sign Up" button in mobile view, the Sign Up form appears on the right side of the screen, requiring horizontal scrolling. Instead, it should appear directly below the mobile toggle buttons, just like the Sign In form.
+    Add Animation for Form Toggling: When switching between the Sign In and Sign Up forms in mobile view, we need to add a smooth animation to enhance the user experience.
+
+Let’s address these issues by updating the auth.blade.php file. Here’s the plan:
+Plan to Resolve Issues
+
+    Fix Sign Up Form Positioning:
+        The issue arises because the desktop layout uses a sliding animation (transform: translateX(100%)) to switch between forms, which is still affecting the mobile view. In mobile view, we’re using display: block/none to toggle forms, but residual desktop styles (e.g., transform) are causing the Sign Up form to appear off-screen.
+        Solution: Ensure that in mobile view, the transform property is reset, and both forms are positioned directly below the toggle buttons using position: relative and proper layout adjustments.
+    Add Animation for Form Toggling:
+        We’ll add a fade-and-slide animation when switching between forms in mobile view. This can be achieved using CSS transitions with opacity and a slight vertical translateY for a smooth effect.
+        Solution: Add a CSS animation that fades out the current form and fades in the new form with a subtle slide-up effect.
+
+Updated auth.blade.php
+
+Below is the updated auth.blade.php file with the fixes for form positioning and the addition of a toggle animation in mobile view. I’ve kept the rest of the functionality intact, focusing on the mobile-specific changes.
+----
+
+
+1. this is a landing page of my porfolio project, where user can create thier amazing portfolios with simple step, what i want to do is i want to tell user a story in the landing page meaning it should look like a story.
+- hello my self priyanshu Dave, i'm laravel developer and learning new concepts of laravel by creating projects is what i do
+- One day i was updating my portfolio and though that this doc files and pdf's are not best friends updating portfolio is a pain in the as.. umm nevermind, that's why i thoufgh i should create a site in which i can create and share my portfolio with ease thats why i created this,
+- but as i was creating this project for myself and it's really a dumb idea to generate a whole site just for myself, right?than i thought that unlike me there could be bunch of lazy/busy people that also feels same as i feel about upating a peace of paper which gives them food. at that moment the idea of buildmyfolio came into my mind and i crated this beautiful and easy to use site.
+
+i have seen many portfolio creation sites where user has to drag and drop elemetns that they want to add and half of them are paid so user has to pay a lot i mean a lot(time,money,sweat and only creative people are able to create something amazing and trust me i'm not one of them, like i'm but i'm not as well) just to generate a document which they can create for free in google doc. but this is really a pain in the as.. umm nevermind,One day i was updating my portfolio and though that this document files and pdf's are not best friends, that's why i thought that i should create something, something really creative so i started createing portoflio using html.....yeah html. thats a really great way to start by the way. than i thought ok so whenever i have to make some changes i have to add another div and add bunch of css just to make one goddam experiance fit in the screen. and that's exactly what we have to do in the document as well right? so both the ways are kind of similar, in one you should have some kind of coding knowlegde or you have to be really good at writing promtps in chat gpt. soo that's when i though that i need a dashboard from which i can add data and that data get's converted into a portfolio site. umm good idea priyanshu but how exactly are you thinking to do that?? boom... the born of BuildMyFolio. yayyyyyyyyyyyyyy woohoooooo.. here user can add directly add data update it and delete it as well from a really good mobile responsive user panel and share the link of the portfolio directly to anyone on planet earth or mars if you are really good friends with aliens and you need a great job opportunities there,
+but as i was creating this project for myself and it's really a dumb idea to generate a whole site just for myself, right?than i thought that unlike me there could be bunch of lazy/busy people that also feels same as i feel about upating a peace of paper which gives them food. at that moment the idea of buildmyfolio came into my mind and i crated this beautiful and easy to use site.
+
+
+
+-- Task - 1st May --
+when an approved request got rejected i want to change the status of  	plan_id  & plan_expires_at  in the suers table, and i also want to check if the user still has some time left in trial_expires_at than the trail period should get started the value of the plan_id should get changed get that from the plans table the name of the trail period is Basic here are both the tables plans and users and the controller code 
+
+-- Task - 29th April --
+
+	-- Backend --
+1. -- add soical links(Predefined) to the about me section
+2. add My clients section
+3. -- add option to choose location for the contact form
+4. -- when someone fills the contact form the user will recive email about it
+5. -- move linkdin url from basic profile to about me section
+6. -- highlight the section we user is currnetly on in the sidebar
+
+	-- Frontend --
+1. -- add resume somewhere on the portfolio
+2. -- move linkdin link to the bottom with other social links 
+3. -- add resume instead of linkdin link above the github link 
+4. -- the location user adds to the basic profile, this should get changed in the contact form as well
+
+
+
+-- 29th april -- Upcomming package related changes --
+right now i only have 2 plans one is a free trial where user can use the site for 14 days for free and here i also have some conditions, that only one project detail, one education details, one expereiance details,one skill category and under that only 5 skills, same for interesets 
+============
+============
+
+-- Design Updates --
+
+1]Fixed H1 class:
+
+	<h1 class="text-2xl md:text-3xl font-extrabold text-sky-800 mb-4 text-center tracking-tight drop-shadow-md">
+
+2] Fixed h2 class with same css
+
+	<h2 class="text-2xl md:text-3xl font-extrabold text-sky-800 mb-4 text-center tracking-tight drop-shadow-md">
+
+3] Form Css :
+
+	class="space-y-6 bg-gray-100 p-4 sm:p-6 rounded-lg shadow-md border border-gray-300">
+
+4] git url and linkdin are null from the db - profile bd
+
+5] design update in the profile settings index page 
+
+6] add nullable to the edit method in the profile controller
+
+7] buttons css
+
+8] make form big by : lg:p-4
+ if the form is looking small in mobile remove the p tag and add lg:p-4(wich will only work for large screens)
+
+9] education controller added nullable in fields
+
+10] add text msg in the index views for the users that the table is scrollable:
+	<p class="text-sm text-gray-500 text-center mb-2 sm:hidden">Swipe left/right to view more</p>
+
+11] added word limits using the below code:
+	{{ Str::limit($item->live_url, 10, '....') }}
+	-> added in the expe section index file
+
+-- March 20,2025 --
+==============
+	TODO:
+==============
+1. check all the validations - in progress
+
+2. Add Toast meassge for create/edit/update/delete for the following:
+	-> about form 	- done
+	-> education	- done
+	-> experience	- done
+	-> project		- done
+	-> skill		- done
+	-> interest		- done
+
+3. email otp verificartion on Registration - done
+
+4. design update
+	-> skill 
+
+5. dark mode
+<button @click="darkMode = !darkMode"
+        class="fixed top-4 right-4 bg-gray-200 p-2 rounded-full shadow hover:bg-gray-300 transition">
+    <span x-show="!darkMode">🌞</span>
+    <span x-show="darkMode">🌙</span>
+</button>
+
+<div x-data="{ darkMode: false }" x-bind:class="{ 'bg-gray-900 text-white': darkMode, 'bg-white text-black': !darkMode }">
+    <!-- Rest of your page -->
+</div>
