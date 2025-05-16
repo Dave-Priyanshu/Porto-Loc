@@ -1,0 +1,494 @@
+body {
+    margin: 0;
+    background-color: #0e0e0e;
+    overflow-x: hidden;
+    font-family: 'Satoshi', sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+
+.sticky-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 1000;
+}
+
+.sticky-btn {
+    background-color: white;
+    color: black;
+    border: none;
+    padding: 9px 10px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.sticky-btn:hover {
+    transform: translateY(-2px);
+}
+
+.sticky-btn.with-icon svg {
+    margin-right: 8px;
+}
+
+@media (max-width: 480px) {
+    .sticky-btn {
+        font-size: 12px;
+        padding: 8px 12px;
+    }
+}
+
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 2rem);
+    max-width: 1140px;
+    padding: 0.5rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    /* Changed from center */
+    align-items: center;
+    background: transparent;
+    border: none;
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+.navbar.scrolled {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    margin-top: 1rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+
+.navbar .logo {
+    font-weight: bold;
+    font-size: 1.25rem;
+}
+
+.navbar .nav-links {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 1.5rem;
+}
+
+.nav-links a {
+    position: relative;
+    padding-right: 10px;
+    text-decoration: none;
+    color: white;
+}
+
+.nav-links a::after {
+    content: "•";
+    position: absolute;
+    right: 0;
+    top: 0;
+    left: 54px;
+    color: white;
+}
+
+.nav-links a:last-child::after {
+    content: "";
+}
+
+.contact-img-container {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.contact-name {
+    font-weight: bold;
+    font-size: 1.25rem;
+    color: white;
+}
+
+.resume-btn {
+    display: flex;
+    align-items: center;
+}
+
+.glass-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 0.5rem 1rem;
+    color: white;
+    cursor: pointer;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.glass-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.resume-icon {
+    height: 1rem;
+    width: 1rem;
+}
+
+.profile-section {
+    padding: 8rem 1rem;
+    color: white;
+    font-family: 'Inter', sans-serif;
+    max-width: 600px;
+    margin: auto;
+    padding-bottom: 5%;
+}
+
+.profile-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.profile-pic {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 0.5rem;
+}
+
+.profile-name {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.profile-subtitle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    /* allows wrapping if needed on small screens */
+    gap: 0.4rem;
+    font-size: 0.9rem;
+    color: #cfcfcf;
+    margin-top: 0.5rem;
+}
+
+.status-dot {
+    display: inline-block;
+    height: 8px;
+    width: 8px;
+    background-color: #00ff87;
+    border-radius: 50%;
+    margin-right: 6px;
+}
+
+.profile-subtitle a {
+    text-decoration: none;
+    color: #cfcfcf;
+    padding-left: 1%;
+}
+
+.divider {
+    border: none;
+    border-top: 1px solid #333;
+    margin: 2rem 0;
+}
+
+.section-title {
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+    color: #ffffff;
+}
+
+.cards-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.contact-card {
+    display: flex;
+    align-items: center;
+    border: 1px solid #2e2e2e;
+    padding: 2rem;
+    border-radius: 14px;
+    transition: background 0.3s ease;
+}
+
+.contact-card:hover {
+    background-color: #2a2a2a;
+}
+
+.icon-circle {
+  background-color: #ffffff;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 1rem;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.icon-circle.dark {
+  background-color: #3a3a3a;
+}
+
+.icon-circle i {
+  color: black;
+  font-size: 20px;
+  transition: color 0.3s ease;
+}
+
+/* Hover icon color switch */
+.contact-card:hover .icon-circle {
+  background-color: #ffffff;
+}
+
+.contact-card .icon-circle i 
+{
+    color: white;
+}
+.contact-card:hover .icon-circle i {
+  color: #000000;
+}
+
+.card-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.card-title {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #ffffff;
+}
+
+.card-subtitle {
+    font-size: 0.875rem;
+    color: #bcbcbc;
+    margin-top: 2px;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+    .contact-card {
+        padding: 0.75rem;
+    }
+
+    .icon-circle {
+        width: 40px;
+        height: 40px;
+        margin-right: 0.75rem;
+    }
+
+    .card-title {
+        font-size: 0.95rem;
+    }
+
+    .card-subtitle {
+        font-size: 0.8rem;
+    }
+}
+
+.native-footer {
+    color: #d1d1d1;
+    font-family: "Segoe UI", sans-serif;
+    margin-top: 6%;
+    padding-left: 26px;
+}
+
+.footer-top {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 93%;
+}
+
+.footer-brand-social {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.logo {
+    font-size: 2rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 0.2rem;
+}
+
+.logo .n {
+    background: linear-gradient(to right, #3cc8c8, #ab64ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 900;
+}
+
+.logo .ative {
+    color: #fff;
+}
+
+.logo .php {
+    color: #fff;
+    font-weight: 600;
+}
+
+.social-icons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.social-icons a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #181a24;
+    padding: 0.75rem;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    color: white;
+    text-decoration: none;
+    transition: background 0.3s ease;
+}
+
+.social-icons a:hover {
+    background-color: #2b2d3a;
+}
+
+.footer-bottom {
+    text-align: center;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    max-width: 93%;
+}
+
+.footer-bottom strong {
+    color: white;
+}
+
+.custom-hr {
+    position: relative;
+    width: 94%;
+    margin: 11px 0;
+}
+
+.custom-hr hr {
+    border: none;
+    height: 2px;
+    background: grey;
+    margin: 0;
+    width: 100%;
+}
+
+.dot {
+    position: absolute;
+    top: 50%;
+    width: 6px;
+    height: 6px;
+    background: #343232;
+    border-radius: 50%;
+    transform: translateY(-50%);
+}
+
+.left-dot {
+    left: 0;
+}
+
+.right-dot {
+    right: 0;
+}
+
+
+@media (min-width: 768px) {
+    .footer-top {
+        flex-direction: row;
+        align-items: flex-start;
+    }
+
+    .footer-brand-social {
+        align-items: flex-start;
+    }
+
+    .footer-bottom {
+        display: flex;
+        justify-content: space-between;
+        padding: 0 0rem;
+        flex-wrap: wrap;
+    }
+}
+
+.footer-right {
+    display: flex;
+    gap: 80px;
+}
+
+.footer-column li a {
+    text-decoration: none;
+    color: grey;
+}
+
+.footer-column {
+    text-align: right;
+}
+
+.footer-column ul {
+    text-align: left;
+    list-style: none;
+}
+
+.footer-left h1 {
+   color: white;
+}
+
+#text {
+    font-size: 13px;
+    height: 17px;
+    margin: 0;
+}
+
+.profile-subtitle a {
+    text-decoration: none;
+    color: #cfcfcf;
+    white-space: nowrap;
+}
+
+.contact-img {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 0.5rem;
+}
+.hr-seperator
+{
+    margin-left: 3%;
+    margin-right: 3%;
+    height: 1px; 
+    background-color: #ccc; 
+
+}
