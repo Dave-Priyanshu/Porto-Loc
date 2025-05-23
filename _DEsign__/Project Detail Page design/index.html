@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pricing Page</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/clash-display">
+    <style>
+        body {
+            background: radial-gradient(circle at 50% 50%, rgba(20, 20, 20, 0.9) 0%, #0a0a0a 70%);
+            color: #ffffff;
+            font-family: 'Clash Display', sans-serif;
+        }
+        .gradient-border {
+            border: 2px solid transparent;
+            background: linear-gradient(90deg, #6b48ff, #00ddeb) border-box;
+            -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: destination-out;
+            mask-composite: exclude;
+        }
+        .glassmorphism {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+        }
+        .section-divider {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+        }
+        .custom-checkbox {
+            appearance: none;
+            width: 16px;
+            height: 16px;
+            border: 2px solid #4b5563;
+            border-radius: 4px;
+            background-color: transparent;
+            display: inline-block;
+            position: relative;
+            vertical-align: middle;
+            cursor: pointer;
+        }
+        .custom-checkbox:checked {
+            background-color: #6b48ff;
+            border-color: #6b48ff;
+        }
+        .custom-checkbox:checked::after {
+            content: '\2713';
+            font-size: 12px;
+            color: white;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <!-- Header -->
+    <header class="flex justify-between items-center px-6 py-4">
+        <div class="flex items-center">
+            <img src="https://via.placeholder.com/24" alt="Logo" class="w-6 h-6 mr-2">
+            <span class="text-xl font-bold">Framer</span>
+        </div>
+        <nav class="hidden md:flex space-x-6">
+            <a href="#" class="text-gray-400 hover:text-white">Features</a>
+            <a href="#" class="text-gray-400 hover:text-white">Resources</a>
+            <a href="#" class="text-gray-400 hover:text-white">Help</a>
+            <a href="#" class="text-gray-400 hover:text-white">Pricing</a>
+        </nav>
+        <button class="bg-gray-800 text-white px-4 py-2 rounded-lg">Sign up</button>
+    </header>
+
+    <!-- Main Section -->
+    <main class="px-6 py-12 max-w-6xl mx-auto">
+        <h1 class="text-4xl font-bold text-center mb-4">Pricing</h1>
+        <p class="text-gray-400 text-center mb-8">Use Framer for free, upgrade to add a custom domain, access additional features, and increase limits.</p>
+
+        <!-- Tabs -->
+        <div class="flex justify-center space-x-4 mb-12">
+            <button class="border-b-2 border-white text-white pb-2">Personal</button>
+            <button class="border-b-2 border-transparent text-gray-400 pb-2 hover:text-white">Business</button>
+        </div>
+
+        <!-- Pricing Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+            <!-- Launch Card -->
+            <div class="glassmorphism p-6 rounded-lg gradient-border">
+                <h2 class="text-2xl font-bold mb-2">Launch</h2>
+                <p class="text-gray-400 mb-4">Launch your business</p>
+                <p class="text-4xl font-bold mb-4">Free</p>
+                <ul class="text-gray-400 space-y-2 mb-6">
+                    <li>1 site</li>
+                    <li>500 CMS collections</li>
+                    <li>200 GB bandwidth</li>
+                    <li>20 CMS collections</li>
+                </ul>
+                <button class="w-full bg-gradient-to-r from-purple-500 to-cyan-400 text-white py-3 rounded-lg">Get started</button>
+            </div>
+
+            <!-- Scale Card -->
+            <div class="glassmorphism p-6 rounded-lg">
+                <h2 class="text-2xl font-bold mb-2">Scale</h2>
+                <p class="text-gray-400 mb-4">Scale your business</p>
+                <p class="text-4xl font-bold mb-4">$20,000</p>
+                <ul class="text-gray-400 space-y-2 mb-6">
+                    <li>5 sites</li>
+                    <li>2000 CMS collections</li>
+                    <li>500 GB bandwidth</li>
+                    <li>30 CMS collections</li>
+                </ul>
+                <button class="w-full bg-gray-700 text-white py-3 rounded-lg">Get started</button>
+            </div>
+
+            <!-- Enterprise Card -->
+            <div class="glassmorphism p-6 rounded-lg">
+                <h2 class="text-2xl font-bold mb-2">Enterprise</h2>
+                <p class="text-gray-400 mb-4">Custom pricing</p>
+                <p class="text-4xl font-bold mb-4">Custom</p>
+                <ul class="text-gray-400 space-y-2 mb-6">
+                    <li>Custom limits</li>
+                    <li>Custom CMS collections</li>
+                    <li>Custom security</li>
+                    <li>Stock CMS collections</li>
+                </ul>
+                <button class="w-full bg-gray-700 text-white py-3 rounded-lg">Explore</button>
+            </div>
+        </div>
+
+        <!-- Comparison Table -->
+        <div class="space-y-12">
+            <!-- Publish Section -->
+            <div class="glassmorphism p-6 rounded-lg">
+                <h3 class="text-xl font-bold mb-4">Publish</h3>
+                <div class="grid grid-cols-4 gap-4 text-gray-400">
+                    <div></div>
+                    <div class="text-center font-bold">Launch</div>
+                    <div class="text-center font-bold">Scale</div>
+                    <div class="text-center font-bold">Enterprise</div>
+                    <div>Sites</div>
+                    <div class="text-center">1 site</div>
+                    <div class="text-center">5 sites</div>
+                    <div class="text-center">Custom</div>
+                    <div>CMS collections</div>
+                    <div class="text-center">500 CMS collections</div>
+                    <div class="text-center">2000 CMS collections</div>
+                    <div class="text-center">Custom</div>
+                </div>
+            </div>
+            <div class="section-divider"></div>
+
+            <!-- Collaboration Section -->
+            <div class="glassmorphism p-6 rounded-lg">
+                <h3 class="text-xl font-bold mb-4">Collaboration</h3>
+                <div class="grid grid-cols-4 gap-4 text-gray-400">
+                    <div></div>
+                    <div class="text-center font-bold">Launch</div>
+                    <div class="text-center font-bold">Scale</div>
+                    <div class="text-center font-bold">Enterprise</div>
+                    <div>Editors</div>
+                    <div class="text-center">10 editors max (Free), $12.50 per editor</div>
+                    <div class="text-center">10 editors max (Free), $12.50 per editor</div>
+                    <div class="text-center">Custom</div>
+                </div>
+            </div>
+            <div class="section-divider"></div>
+
+            <!-- Features Section -->
+            <div class="glassmorphism p-6 rounded-lg">
+                <h3 class="text-xl font-bold mb-4">Features</h3>
+                <div class="grid grid-cols-4 gap-4 text-gray-400">
+                    <div></div>
+                    <div class="text-center font-bold">Launch</div>
+                    <div class="text-center font-bold">Scale</div>
+                    <div class="text-center font-bold">Enterprise</div>
+                    <div>Custom code</div>
+                    <div class="text-center"><input type="checkbox" class="custom-checkbox" checked></div>
+                    <div class="text-center"><input type="checkbox" class="custom-checkbox" checked></div>
+                    <div class="text-center"><input type="checkbox" class="custom-checkbox" checked></div>
+                </div>
+            </div>
+            <div class="section-divider"></div>
+
+            <!-- Hosting Section -->
+            <div class="glassmorphism p-6 rounded-lg">
+                <h3 class="text-xl font-bold mb-4">Hosting</h3>
+                <div class="grid grid-cols-4 gap-4 text-gray-400">
+                    <div></div>
+                    <div class="text-center font-bold">Launch</div>
+                    <div class="text-center font-bold">Scale</div>
+                    <div class="text-center font-bold">Enterprise</div>
+                    <div>Storage</div>
+                    <div class="text-center">500GB storage</div>
+                    <div class="text-center">1000GB storage</div>
+                    <div class="text-center">Custom</div>
+                </div>
+            </div>
+            <div class="section-divider"></div>
+
+            <!-- Localization Section -->
+            <div class="glassmorphism p-6 rounded-lg">
+                <h3 class="text-xl font-bold mb-4">Localization</h3>
+                <div class="grid grid-cols-4 gap-4 text-gray-400">
+                    <div></div>
+                    <div class="text-center font-bold">Launch</div>
+                    <div class="text-center font-bold">Scale</div>
+                    <div class="text-center font-bold">Enterprise</div>
+                    <div>Locales</div>
+                    <div class="text-center">10 locales max, $127 per locale</div>
+                    <div class="text-center">10 locales max, $127 per locale</div>
+                    <div class="text-center">Custom</div>
+                </div>
+            </div>
+            <div class="section-divider"></div>
+
+            <!-- Support Section -->
+            <div class="glassmorphism p-6 rounded-lg">
+                <h3 class="text-xl font-bold mb-4">Support</h3>
+                <div class="grid grid-cols-4 gap-4 text-gray-400">
+                    <div></div>
+                    <div class="text-center font-bold">Launch</div>
+                    <div class="text-center font-bold">Scale</div>
+                    <div class="text-center font-bold">Enterprise</div>
+                    <div>Support type</div>
+                    <div class="text-center">Community support</div>
+                    <div class="text-center">Premium support</div>
+                    <div class="text-center">Priority support</div>
+                </div>
+            </div>
+            <div class="section-divider"></div>
+
+            <!-- Admin & Billing Section -->
+            <div class="glassmorphism p-6 rounded-lg">
+                <h3 class="text-xl font-bold mb-4">Admin & Billing</h3>
+                <div class="grid grid-cols-4 gap-4 text-gray-400">
+                    <div></div>
+                    <div class="text-center font-bold">Launch</div>
+                    <div class="text-center font-bold">Scale</div>
+                    <div class="text-center font-bold">Enterprise</div>
+                    <div>Billing</div>
+                    <div class="text-center">Automated billing</div>
+                    <div class="text-center">Automated billing</div>
+                    <div class="text-center">Custom billing</div>
+                </div>
+            </div>
+            <div class="section-divider"></div>
+        </div>
+
+        <!-- FAQ Section -->
+        <div class="mt-12 glassmorphism p-6 rounded-lg">
+            <h3 class="text-xl font-bold mb-4">FAQ</h3>
+            <div class="space-y-4 text-gray-400">
+                <div>
+                    <h4 class="text-white">What's included in the Free plan?</h4>
+                    <p>Projects in the Free plan have access to 10 CMS collections, 1000 pages, 5MB file uploads, and a free locale to try. You can use this to explore Framer or to design templates. To use a custom domain, you'll need to upgrade to a paid plan.</p>
+                </div>
+                <div>
+                    <h4 class="text-white">Which plan is right for me?</h4>
+                    <p>Our Free plan is ideal for non-commercial use, the Mini and Basic plans cater to students, freelancers, and small teams, and the Business plans are designed for teams or agencies with more complex needs. All plans come with a custom domain, annual billing, dedicated support, and the ability to upgrade or downgrade at any time.</p>
+                </div>
+                <div>
+                    <h4 class="text-white">What happens to the Startup and Scaleup plans?</h4>
+                    <p>The Startup plan is renamed to Launch, and the Scaleup plan to Scale. The only difference between them is the price and the features they come with.</p>
+                </div>
+                <div>
+                    <h4 class="text-white">How do I add extra editors?</h4>
+                    <p>Editors can be added per editor, per month, or per year on any plan, and can be added to your workspace or projects at any time. We will notify you when an editor is added to a billing cycle, so you won’t be charged until the end of the cycle. Please note, editors will be charged per editor according to the highest active plan.</p>
+                </div>
+                <div>
+                    <h4 class="text-white">What happens if I go over a limit?</h4>
+                    <p>When you reach certain limits, we will ask you to upgrade your plan in Framer. For more information on limits and form restrictions, please visit our help center or contact support directly.</p>
+                </div>
+                <div>
+                    <h4 class="text-white">What if I only need open-source side projects instead of a full project?</h4>
+                    <p>We can be flexible with our limits for open-source or non-commercial side projects. Please contact us to discuss the options.</p>
+                </div>
+                <div>
+                    <h4 class="text-white">What payment methods do you offer?</h4>
+                    <p>We accept payments via major credit cards, including Visa, MasterCard, and American Express. We also offer billing options, including credit card billing options, for Enterprise plans.</p>
+                </div>
+                <div>
+                    <h4 class="text-white">What is your refund policy?</h4>
+                    <p>We offer a full refund within 14 days of your annual subscription purchase if you live in the EU or Turkey. You are also eligible for a full refund if the subscription is canceled within 14 days of purchase. Please contact our support team, and they will cancel the subscription and process the refund.</p>
+                </div>
+                <div>
+                    <h4 class="text-white">Explore our help center for all articles related to accounts and billing.</h4>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

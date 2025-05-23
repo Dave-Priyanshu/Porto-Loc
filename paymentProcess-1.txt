@@ -1,0 +1,588 @@
+-> currently in my main project where i want to add online payment, i'm using a form where i'm showing my qr code and user have to scan it and share screenshot of the payment and that from data get's display in the superadmin area where i have to manually check if the user has done the payment or not and than approve or reject his request manually.
+-> first when user registers himself in the site he get's 14 days of free trail period where user can use the site for free only for 14days (with limited usage of the site)
+->/var/www/html/laravel/portfolio_final/app/Http/Controllers/Auth/RegisteredUserController.php
+<?php
+
+namespace App\Http\Controllers\Auth;
+
+use App\Http\Controllers\Controller;
+use App\Models\Plan;
+use App\Models\User;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Validation\Rules;
+use Illuminate\View\View;
+
+class RegisteredUserController extends Controller
+{
+    /**
+     * Display the registration view.
+     */
+    public function create(): View
+    {
+        // merged view, show sign-up panel
+        return view('auth.auth', ['panel' => 'signup']);
+    }
+
+    /**
+     * Handle an incoming registration request with OTP.
+     */
+    public function store(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'name'                  => ['required','string','max:255'],
+            'username'              => ['required','string','max:255','unique:users'],
+            'email'                 => ['required','string','email','max:255','unique:users'],
+            'password'              => ['required','confirmed', Rules\Password::defaults()],
+        ]);
+
+        $otp = rand(100000, 999999);
+        session([
+            'registration_data' => [
+                'name'     => $request->name,
+                'username' => $request->username,
+                'email'    => $request->email,
+                'password' => Hash::make($request->password),
+                'otp'      => $otp,
+            ],
+            'otp_expires_at' => now()->addMinutes(5)->toDateTimeString(),
+        ]);
+
+        Mail::send('emails.otp', ['otp' => $otp], function ($m) use ($request) {
+            $m->to($request->email)->subject('Your OTP for Registration');
+        });
+
+        return redirect()->route('verify.otp.form')->with('email', $request->email);
+    }
+
+    /**
+     * Display the OTP verification form.
+     */
+    public function showOtpForm(Request $request): View
+    {
+        $registrationData = session('registration_data');
+        if (! $registrationData) {
+            return redirect()->route('register')
+                             ->with('error','Session expired. Please register again.');
+        }
+        return view('auth.verify_otp', ['email' => $registrationData['email']]);
+    }
+
+    /**
+     * Verify the OTP entered by the user and create the account.
+     */
+    public function verifyOtp(Request $request): RedirectResponse
+    {
+        Log::info('OTP verify attempt:', $request->all());
+
+        $request->validate([
+            'email' => 'required|email',
+            'otp'   => 'required|numeric',
+        ]);
+
+        $data        = session('registration_data');
+        $expiresAt   = session('otp_expires_at');
+
+        if (! $data) {
+            return redirect()->route('register')->with('error','Session expired. Please register again.');
+        }
+        if ($data['email'] !== $request->email || $data['otp'] !== (int)$request->otp || now()->greaterThan($expiresAt)) {
+            return redirect()->route('verify.otp.form')->with('error','Invalid or expired OTP.');
+        }
+
+        $trialPlan = Plan::where('billing_cycle','trial')->first();
+        if (! $trialPlan) {
+            return redirect()->route('register')->with('error','No trial plan available.');
+        }
+
+        $user = User::create([
+            'name'              => $data['name'],
+            'username'          => $data['username'],
+            'email'             => $data['email'],
+            'password'          => $data['password'],
+            'email_verified_at' => now(),
+            'trial_expires_at'  => now()->addDays(14),
+            'plan_id'           => $trialPlan->id,
+            'plan_expires_at'   => now()->addDays(14),
+            'is_new'            => true,
+        ]);
+
+        event(new Registered($user));
+        Mail::to($user->email)->send(new \App\Mail\TrialNotificationMail($user));
+        session()->forget(['registration_data','otp_expires_at']);
+        Auth::login($user);
+
+        return redirect()->route('user.welcome.page')->with('success','Registration successful!');
+    }
+
+     /**
+     * Resend the OTP to the user's email.
+     */
+    public function resendOtp(Request $request): RedirectResponse
+    {
+        // Retrieve registration data from session
+        $registrationData = session('registration_data');
+        $email = $registrationData['email'] ?? null;
+
+        if (!$email) {
+            return redirect()->route('register')->with('error', 'Session expired. Please register again.');
+        }
+
+        // Generate a new OTP
+        $otp = rand(100000, 999999);
+        session([
+            'registration_data' => array_merge($registrationData, ['otp' => $otp]),
+            'otp_expires_at' => now()->addMinutes(5)->toDateTimeString(),
+        ]);
+
+        // Send the OTP email
+        try {
+            Mail::send('emails.otp', ['otp' => $otp], function ($m) use ($email) {
+                $m->to($email)->subject('Your New OTP for Registration');
+            });
+            Log::info('Resent OTP to: ' . $email);
+        } catch (\Exception $e) {
+            Log::error('Failed to resend OTP: ' . $e->getMessage());
+            return redirect()->route('verify.otp.form')->with('error', 'Failed to resend OTP. Please try again.');
+        }
+
+        // Flash the otp_sent session to trigger the popup
+        session()->flash('otp_sent', true);
+
+        return redirect()->route('verify.otp.form')->with('email', $email);
+    }
+}
+
+
+-> once user think that he want's to buy membership i have 1 membership option which user can buy in two ways, 1. montly subscription 2. yearly subscription. For this i have created a form from which user get's redirect to the payment form this two files are added below:
+
+->/var/www/html/laravel/portfolio_final/app/Http/Controllers/PaymentController.php
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\PaymentRequest;
+use App\Models\Subscription;
+use App\Models\Plan;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use Carbon\Carbon;
+
+class PaymentController extends Controller
+{
+    /**
+     * Show the payment form for a given plan tier & billing cycle.
+     */
+    public function showPaymentForm(Request $request)
+{
+    if (!Auth::check()) {
+        return redirect()->route('register')->with('error', 'Please register or log in to purchase a membership.');
+    }
+
+    $tier = $request->query('tier', 'starter'); 
+    $billing = $request->query('billing', 'monthly');
+
+    // Get the correct plan price from database
+    $plan = Plan::where('name', ucfirst($tier))
+                ->where('billing_cycle', $billing)
+                ->first();
+
+    if (!$plan) {
+        abort(404, "Plan not found.");
+    }
+
+    $price = $plan->price;
+
+    return view('payments.form', compact('tier', 'billing', 'price'));
+}
+    /**
+     * Handle user submission of payment proof.
+     */
+    public function submitPayment(Request $request)
+    {
+        $request->validate([
+            'selected_tier' => 'required|exists:plans,name',
+            'billing'       => 'required|in:monthly,yearly',
+            'screenshot'    => 'required|image|max:2048',
+        ]);
+
+        $billing = $request->input('billing', 'monthly');
+        $user = Auth::user();
+
+        // find the plan
+        $plan = Plan::where('name', $request->selected_tier)
+                    ->where('billing_cycle', $request->billing)
+                    ->firstOrFail();
+
+        // 1) Create a pending subscription
+        $subscription = Subscription::create([
+            'user_id'    => $user->id,
+            'plan_id'    => $plan->id,
+            'start_date' => Carbon::today(),
+            'status'     => 'pending',
+        ]);
+
+        // 2) Store the screenshot
+        $fileName = time() . '.' . $request->screenshot->extension();
+        $request->screenshot->move(public_path('payment_screenshots'), $fileName);
+        $screenshotPath = 'payment_screenshots/' . $fileName;
+
+        // 3) Create the payment request
+        PaymentRequest::create([
+            'user_id'        => Auth::id(),
+            'email'           => $user->email,
+            'name'            => $plan->name,
+            'subscription_id' => $subscription->id,
+            'payment_amount'  => $plan->price,
+            'screenshot_path' => $screenshotPath,
+            'billing'         => $billing,
+            'status'          => 'pending',
+            'selected_tier'   => $request->selected_tier,
+        ]);
+
+        return redirect()->route('payment.form')
+                         ->with('success', 'Payment submitted! Your membership will activate upon verification.');
+    }
+
+    /**
+     * Superadmin endpoint: approve & activate a payment request.
+     */
+    public function approvePaymentRequest($id)
+    {
+        $payment      = PaymentRequest::findOrFail($id);
+        $subscription = $payment->subscription;
+        $plan         = $subscription->plan;
+        $user         = $subscription->user;
+        $length       = $plan->billing_cycle === 'yearly' ? 365 : 30;
+
+        $endDate = Carbon::today()->addDays($length)->endOfDay();
+
+        // Update subscription
+        $subscription->update([
+            'status'   => 'active',
+            'end_date' => $endDate,
+        ]);
+        \Log::info("User {$user->email} subscription has been activated. subscription ends until {$endDate}.");
+
+        // Preserve trial_expires_at if the trial is still active; don't override it with null.
+        $trialValue = ($user->trial_expires_at && now()->lt($user->trial_expires_at))
+                            ? $user->trial_expires_at
+                            : null;
+
+        // Update user plan details (using the preserved trial value)
+        $user->update([
+            'trial_expires_at' => $trialValue,
+            'plan_id'          => $plan->id,
+            'plan_expires_at'  => $endDate,
+        ]);
+
+        $payment->update(['status' => 'verified']);
+
+        // Send email
+        Mail::to($user->email)
+            ->send(new \App\Mail\MembershipActivatedMail($user, $endDate));
+
+        return redirect()->back()->with('success', 'Payment approved.');
+    }
+
+    public function rejectPaymentRequest($id)
+    {
+        $payment      = PaymentRequest::findOrFail($id);
+        $subscription = $payment->subscription;
+        $user         = $subscription->user;
+
+        // Cancel the subscription and update the payment status.
+        $subscription->update(['status' => 'cancelled']);
+        $payment->update(['status' => 'rejected']);
+
+        // Update the user's plan details:
+        if ($user->trial_expires_at && now()->lt($user->trial_expires_at)) {
+            // Get the trial plan (named "Basic")
+            $trialPlan = Plan::where('name', 'Basic')
+                            ->where('billing_cycle', 'trial')
+                            ->first();
+
+            if ($trialPlan) {
+                $user->update([
+                    'plan_id'         => $trialPlan->id,
+                    'plan_expires_at' => $user->trial_expires_at,
+                ]);
+                \Log::info("User {$user->email} reverted to trial. Trial active until {$user->trial_expires_at}.");
+            } else {
+                $user->update([
+                    'plan_id'         => null,
+                    'plan_expires_at' => null,
+                ]);
+                \Log::error("Trial plan 'Basic' not found for user {$user->email}. Cleared membership details.");
+            }
+        } else {
+            $user->update([
+                'plan_id'         => null,
+                'plan_expires_at' => null,
+            ]);
+            \Log::info("User {$user->email}'s trial period has expired. Cleared membership details.");
+        }
+
+        return redirect()->back()->with('success', 'Payment rejected.');
+    }
+
+
+    /**
+     * Update the status of a payment request (e.g. reject).
+     */
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'status' => 'required|in:pending,verified,rejected',
+        ]);
+
+        $payment = PaymentRequest::findOrFail($id);
+        $payment->update(['status' => $request->status]);
+
+        // If rejected, cancel the subscription
+        if ($request->status === 'rejected') {
+            $subscription = $payment->subscription;
+            $subscription->update(['status' => 'cancelled']);
+        }
+
+        return redirect()->back()->with('success', 'Payment status updated successfully.');
+    }
+}
+
+->/var/www/html/laravel/portfolio_final/resources/views/payments/form.blade.php
+<x-guest-layout>
+    <div class="w-full mx-auto">
+        <h1 class="text-2xl md:text-3xl font-extrabold text-sky-800 mb-4 text-center tracking-tight drop-shadow-md">
+            Complete Your Payment for {{ ucfirst($tier) }} Plan
+        </h1>
+        <p class="mb-4 text-center font-semibold">Price: ₹{{ $price }} ({{ $billing }})</p>
+        
+        <!-- Guidelines / Disclaimer Section -->
+        <div class="p-6 bg-yellow-50 rounded-lg shadow-lg border border-gray-300 mb-6">
+            <h2 class="text-2xl font-bold text-yellow-700 mb-4">Important Guidelines</h2>
+            <ul class="list-disc list-inside text-gray-800 space-y-2">
+                <li>Please attach your payment success screenshot in this form.</li>
+                <li>Your account will be reviewed within 10–12 hours after submission.</li>
+                <li>Register using the same email address provided here.</li>
+            </ul>
+        </div>
+
+        <!-- QR Code Section -->
+        <div class="mb-6 text-center">
+            <img src="{{ asset('assets/images/Wallet.png') }}" alt="Payment QR Code" class="mx-auto w-56 h-56">
+            <p class="mt-2 text-gray-700 font-medium">Scan the QR code to complete your payment</p>
+        </div>
+
+        <!-- Payment Form -->
+        <form action="{{ route('payment.submit') }}" method="POST" enctype="multipart/form-data" class="bg-white p-6 rounded-lg shadow-lg border border-gray-300">
+            @csrf
+
+            <!-- Name Field -->
+            <div class="mb-4">
+                <label for="name" class="block text-gray-700 font-semibold mb-1">Name:</label>
+                @if(Auth::check())
+                    <input type="text" name="name" value="{{ Auth::user()->name }}" class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" readonly>
+                @else
+                    <input type="text" name="name" class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                @endif
+            </div>
+
+            <!-- Email Field -->
+            <div class="mb-4">
+                <label for="email" class="block text-gray-700 font-semibold mb-1">Email:</label>
+                @if(Auth::check())
+                    <input type="email" name="email" value="{{ Auth::user()->email }}" class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" readonly>
+                @else
+                    <input type="email" name="email" class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                    <p class="text-sm text-red-500 mt-1">
+                        Please use the same email address you will use to register on our website.
+                    </p>
+                @endif
+            </div>
+
+            <!-- Hidden fields to pass membership data -->
+            <input type="hidden" name="selected_tier" value="{{ $tier }}">
+            <input type="hidden" name="billing" value="{{ $billing }}">
+            <input type="hidden" name="payment_amount" value="{{ $price }}">
+
+            <!-- Payment Proof Screenshot Field -->
+            <div class="mb-4">
+                <label class="block text-gray-700 font-semibold mb-1">Payment Proof Screenshot:</label>
+                <input type="file" name="screenshot" class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                <p class="text-sm text-red-500 mt-1">Please upload a screenshot of your payment proof.</p>
+            </div>
+
+            <!-- Form Buttons -->
+            <div class="flex flex-col sm:flex-row gap-4">
+                <a href="{{ route('landingPage') }}" class="w-full text-center bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 transition-all">
+                    Back
+                </a>
+                <button type="submit" class="w-full bg-sky-600 text-white px-4 py-2 rounded hover:bg-sky-800 transition-all">
+                    Submit Payment
+                </button>
+            </div>
+        </form>
+
+    </div>
+    <x-toast/>
+    @if(session('success'))
+    <!-- Overlay Message -->
+    <div id="redirectOverlay" class="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-50 hidden">
+        <div class="text-center text-white">
+            <h2 class="text-3xl font-bold mb-4">Payment Submitted!</h2>
+            <p class="text-lg">Redirecting to your payment details page in <span id="redirectTimer">5</span> seconds...</p>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('redirectOverlay').classList.remove('hidden');
+
+        let seconds = 5;
+        const timerSpan = document.getElementById('redirectTimer');
+        const interval = setInterval(() => {
+            seconds--;
+            timerSpan.textContent = seconds;
+            if (seconds <= 0) {
+                clearInterval(interval);
+                window.location.href = "{{ route('admin.userPayment.index') }}";
+            }
+        }, 1000);
+    </script>
+@endif
+
+</x-guest-layout>
+
+-> so user has to scan the qr code and send screenshot of succesfull payment and all the manual payment process get's start,
+-> i have 2 tables one where i store my subscriptions(plans) name of the table is "subscriptions"
+-- Table structure for table `subscriptions`
+--
+
+CREATE TABLE `subscriptions` (
+  `id` bigint UNSIGNED NOT NULL,
+  `user_id` bigint UNSIGNED NOT NULL,
+  `plan_id` bigint UNSIGNED NOT NULL,
+  `start_date` date NOT NULL,
+  `end_date` date DEFAULT NULL,
+  `status` enum('trial','pending','active','expired','cancelled') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'pending',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `subscriptions`
+--
+
+INSERT INTO `subscriptions` (`id`, `user_id`, `plan_id`, `start_date`, `end_date`, `status`, `created_at`, `updated_at`) VALUES
+(11, 1, 2, '2025-04-28', NULL, 'pending', '2025-04-28 06:03:33', '2025-04-28 06:03:33'),
+(13, 1, 1, '2025-04-28', NULL, 'pending', '2025-04-28 06:12:06', '2025-04-28 06:12:06'),
+(14, 1, 1, '2025-04-28', '2025-05-28', 'active', '2025-04-28 06:21:14', '2025-04-28 06:59:53'),
+(15, 28, 1, '2025-04-29', '2025-05-29', 'active', '2025-04-29 04:05:17', '2025-04-29 04:20:14');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `subscriptions`
+--
+ALTER TABLE `subscriptions`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `subscriptions_user_id_foreign` (`user_id`),
+  ADD KEY `subscriptions_plan_id_foreign` (`plan_id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `subscriptions`
+--
+ALTER TABLE `subscriptions`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `subscriptions`
+--
+ALTER TABLE `subscriptions`
+  ADD CONSTRAINT `subscriptions_plan_id_foreign` FOREIGN KEY (`plan_id`) REFERENCES `plans` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `subscriptions_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+COMMIT;
+
+-> second is "payment_requests" where the payment request user has added get's stored:
+-- Database: `Portfolio_laravel_7thApril`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `payment_requests`
+--
+
+CREATE TABLE `payment_requests` (
+  `id` bigint UNSIGNED NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` bigint UNSIGNED DEFAULT NULL,
+  `subscription_id` bigint UNSIGNED DEFAULT NULL,
+  `selected_tier` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payment_amount` decimal(8,2) NOT NULL,
+  `screenshot_path` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` enum('pending','verified','rejected') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'pending',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `billing` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'monthly'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `payment_requests`
+--
+
+INSERT INTO `payment_requests` (`id`, `name`, `email`, `user_id`, `subscription_id`, `selected_tier`, `payment_amount`, `screenshot_path`, `status`, `created_at`, `updated_at`, `billing`) VALUES
+(39, 'Starter', 'priyanshutest2001@gmail.com', 1, 14, 'starter', '49.00', 'payment_screenshots/1745841074.jpg', 'verified', '2025-04-28 06:21:14', '2025-04-28 06:59:53', 'monthly'),
+(40, 'Starter', 'lases40671@macho3.com', 28, 15, 'starter', '49.00', 'payment_screenshots/1745919317.jpg', 'verified', '2025-04-29 04:05:17', '2025-04-29 04:20:14', 'monthly');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `payment_requests`
+--
+ALTER TABLE `payment_requests`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `payment_requests_user_id_foreign` (`user_id`),
+  ADD KEY `payment_requests_subscription_id_foreign` (`subscription_id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `payment_requests`
+--
+ALTER TABLE `payment_requests`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `payment_requests`
+--
+ALTER TABLE `payment_requests`
+  ADD CONSTRAINT `payment_requests_subscription_id_foreign` FOREIGN KEY (`subscription_id`) REFERENCES `subscriptions` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `payment_requests_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+COMMIT;
+
+IF YOU UNDERSTAND SO FAR JUST EXPLAIN ME MY PAYMENT PROCESS IN FEW SIMPLE STEPS PLEASE(ONE LINERS ONLU)

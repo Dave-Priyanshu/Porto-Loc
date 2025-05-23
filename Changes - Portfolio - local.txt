@@ -1,3 +1,37 @@
+यदा यदा हि धर्मस्य ग्लानिर्भवति भारत ।
+अभ्युत्थानमधर्मस्य तदात्मानं सृजाम्यहम् ॥
+परित्राणाय साधूनां विनाशाय च दुष्कृताम् ।
+धर्मासंस्थापनार्थाय संभवामि युगे युगे ॥
+
+
+---  22nd May --- 
+1. when user refresh the checkout page one entry is getting added to the "payment_requests" table
+2. and the payment request get's 
+3. super admin changes regarding payment
+
+
+k ID: rzp_test_dvaFEUYovLQ9ES
+K Sec : 3xkZSyb1lrrH9TTMk3PI0m9z
+
+Card Number: 4111 1111 1111 1111
+Expiry: Any future date (e.g., 12/25)
+CVV: Any 3 digits (e.g., 123)
+OTP: Use 123456 for test transactions.
+
+Potential Features to Improve User Experience
+-- 19th may --
+1. Figma design links
+2. exapand fields : Photographers
+
+! icon
+<div class="flex items-center mb-2">
+                <svg class="h-4 w-4 text-sky-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                <p class="text-sm text-white">You can drag and reorder the links using the grip handle</p>
+            </div>
+
+
 -- git commits -- 16th may --
 1. 
 fix(about): Prevent services warning reappearing after acknowledging and saving 6+ services
@@ -25,15 +59,17 @@ fix(about): Prevent services warning reappearing after acknowledging and saving 
 12. Gamified Achievement Badges
 
 
+<button type="button" id="geolocation-btn" class="mt-2 px-3 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-700" aria-label="Use my current location"><svg class="h-5 w-5 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5 14.5 7.62 14.5 9s-1.12 2.5-2.5 2.5z"/>
+          </svg></button>
+
+
 -- profile page --
 1. Location Autocomplete with Geolocation
 Explanation: Enhance the location field with an autocomplete dropdown powered by a geolocation API (e.g., Google Places API or OpenStreetMap Nominatim) and an option to use the browser’s geolocation to prefill the user’s city/country. This simplifies input and ensures accurate location formatting format.
 
-2.Progress Indicator for File Uploads
 
-    Explanation: Show a progress bar or spinner during resume and profile picture uploads to inform users that the form is processing. This prevents confusion during long uploads and reassures users that the system is responsive.
-
-3.Collapsible Help Tips for Each Field
+3.Collapsible Help Tips for Each Field - at the end
 
     Explanation: Add expandable help icons (e.g., question mark icons) next to each field label that reveal tips or examples when clicked. This guides users without cluttering the form interface.
 

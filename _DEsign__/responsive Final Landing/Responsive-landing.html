@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+    <link href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="Responsive-landing.css" />
+    <title>Landing page</title>
+</head>
+
+
+<body>
+    <div class="sunlight-bg" style="background-image: url('sunshineimg.jpg');"></div>
+    <div class="grid"></div>
+    <div class="circle"></div>
+    <nav class="navbar" id="navbar">
+        <div class="logo-container">
+            <img src="https://buildmyfolio.wuaze.com/public/images/logo.png" alt="Site Logo" style="height: 2rem;" />
+            <span class="site-name">BuildMyFolio</span>
+        </div>
+        <div class="nav-links">
+            <a href="#">Home</a>
+            <a href="#">Mobile</a>
+            <a href="#">Docs</a>
+            <a href="#" class="sponsor-link">
+                Login/Register
+            </a>
+        </div>
+    </nav>
+    <div class="container">
+        <section class="hero-section">
+            <div class="hero-text">
+                <h2>Your Portfolio</h2>
+                <h1>Built in Minutes, Not Months</h1>
+            </div>
+            <div class="cta-row">
+                <a href="#" class="cta-button">Get Started Free</a>
+                <div class="trusted-section">
+                    <div class="stars">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                    <div class="trusted-text">
+                        Trusted by over 2000 plus experts in the community
+                    </div>
+                </div>
+            </div>
+            <div class="hero-image">
+                <a href=""></a>
+            </div>
+        </section>
+    </div>
+    <!-- Ditch and Drag section -->
+    <div class="container">
+        <div class="portfolio-section">
+            <p class="portfolio-description">
+                Ditch the drag-and-drop headaches and endless CSS tweaks.<span>Fill in your details, click “Publish,”
+                    and share a gorgeous, mobile-responsive portfolio</span>
+                <span class="no-coding">—no coding required.</span>
+            </p>
+        </div>
+    </div>
+    <!-- ugh not another pdf section -->
+    <div class="container">
+        <section class="features-section">
+            <div class="features-header">
+                <div class="features-heading">
+                    <h2>
+                        <span class="white-text">What</span><br />
+                        <span class="gradient-text">Do you you get?</span>
+                    </h2>
+                </div>
+                <p class="features-description">
+                    Ditch the drag-and-drop headaches and endless CSS tweaks.
+                    <span class="grey-text"> Fill in your details, click “Publish,” and share a gorgeous,
+                        mobile-responsive portfolio </span>
+                    <span>—no coding required.</span>
+                </p>
+            </div>
+
+
+            <div class="features-cards">
+                <!-- Card 1 -->
+                <div class="feature-card">
+                    <div class="card-inner">
+                        <div class="card-icon"></div>
+                        <h3 class="card-title">Dashboard Control</h3>
+                        <p class="card-text">
+                            Add, edit, reorder, or remove any section—right from your personal dashboard.
+                        </p>
+                    </div>
+                </div>
+
+
+                <!-- Card 2 -->
+                <div class="feature-card">
+                    <div class="card-inner">
+                        <div class="card-icon">
+                            <a href=""></a>
+                        </div>
+                        <h3 class="card-title">Instant Updates</h3>
+                        <p class="card-text">
+                            One-click “Publish” keeps your site live and up-to-date in seconds.
+                        </p>
+                    </div>
+                </div>
+
+
+                <!-- Card 3 -->
+                <div class="feature-card">
+                    <div class="card-inner">
+                        <div class="card-icon"></div>
+                        <h3 class="card-title">Transparent Pricing</h3>
+                        <p class="card-text">
+                            A tiny flat fee (one-time or low monthly) unlocks everything—no hidden gates.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <!-- cards slider section -->
+    <div class="container">
+        <div class="pdf-section">
+            <div class="pdf-heading">
+                <h2>BuildMyFolio became the answer to <span class="gradient-text">"Ugh, not another PDF!"</span></h2>
+            </div>
+            <div class="pdf-cards">
+                <div class="pdf-card pdf-card-left">
+                    <img src="https://picsum.photos/seed/picsum/200/300" alt="PDF Card Left">
+                </div>
+                <div class="pdf-card pdf-card-middle">
+                    <img src="https://picsum.photos/seed/picsum/200/300" alt="PDF Card Middle">
+                </div>
+                <div class="pdf-card pdf-card-right">
+                    <img src="https://picsum.photos/seed/picsum/200/300" alt="PDF Card Right">
+                </div>
+            </div>
+            <div class="pdf-dots" id="pdfDots"></div>
+        </div>
+    </div>
+    <!-- why choose buildmyfolio section -->
+    <div class="container">
+        <div class="main-container">
+            <h1 class="section-title">WHY CHOOSE <span>BuildMyFolio?</span></h1>
+            <div class="columns-container">
+                <div class="column">
+                    <div class="block zero-coding">
+                        <div class="content-wrapper">
+                            <div class="circle-one"></div>
+                            <div class="text-content">
+                                <h2>ZERO CODING, ALL CONTROL</h2>
+                                <p>Forget <code>&lt;div&gt;</code>-mania. Add, edit, reorder—even delete
+                                    sections—directly from your dashboard. No CSS wizardry required.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="block mobile-responsive">
+                        <div class="content-wrapper">
+                            <div class="circle-one"></div>
+                            <div class="text-content">
+                                <h2>INSTANT MOBILE-RESPONSIVE DESIGN</h2>
+                                <p>Your portfolio looks great on desktop, tablet, or the tiny phone your boss
+                                    borrowed—so you always come off polished.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="block sample-sections left-sample">
+                        <h2>SAMPLE SECTIONS</h2>
+                        <p>Explore ready-to-use layout samples</p>
+                        <div class="sample-boxes">
+                            <div class="sample-box"></div>
+                            <div class="sample-box"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="block sample-sections right-sample">
+                        <h2>SAMPLE SECTIONS</h2>
+                        <p>Explore ready-to-use layout samples</p>
+                        <div class="sample-boxes">
+                            <div class="sample-box"></div>
+                            <div class="sample-box"></div>
+                        </div>
+                    </div>
+                    <div class="block shareable">
+                        <div class="content-wrapper">
+                            <div class="circle-one"></div>
+                            <div class="text-content">
+                                <h2>SHAREABLE—ON EARTH or BEYOND</h2>
+                                <p>Send a simple URL instead of juggling PDFs. Impress human recruiters, alien
+                                    employers, or your Grandma—all from the same link.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="block lightning-fast">
+                        <div class="content-wrapper">
+                            <div class="circle-one"></div>
+                            <div class="text-content">
+                                <h2>LIGHTNING-FAST UPDATES</h2>
+                                <p>New project? Career pivot? Five-minute dashboard edit, one-click publish—and voilà,
+                                    your site is up to date.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Profile and contact section -->
+    <div class="container">
+        <div class="profile-container">
+            <div class="profile-wrapper">
+                <div class="profile-circle"></div>
+                <div class="profile-text">
+                    <p class="profile-label">Project by</p>
+                    <h1 class="profile-name">Priyanshu Dave</h1>
+                    <p class="profile-tagline">
+                        Login, fill in your details, and let BuildMyFolio do the heavy lifting. Join the lazy club—so
+                        you can focus on what you do best: being awesome. 😎
+                    </p>
+                </div>
+            </div>
+            <div class="contact-container">
+                <div class="contact-box">
+                    <p class="contact-label">Support and Feedback</p>
+                    <a href="mailto:davedhruvin81@gmail.com" class="contact-link">dave.dhruvin81@gmail.com</a>
+                </div>
+                <div class="contact-box">
+                    <p class="contact-label">Follow us for Product updates</p>
+                    <a href="#" class="contact-link social-link">Dhruvin.uxd</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- testiomials section -->
+    <div class="container-test">
+        <div class="header-test animate-fadeIn3D">
+            <img src="heartshape.png" alt="Background" class="header-bg-image" />
+            <h2>Our precious <br><span>Wall of Love</span>💛</h2>
+            <p>Read what community members are saying about us ✨</p>
+        </div>
+
+
+        <div class="columns">
+            <!-- <div class="fade-top"></div>
+      <div class="fade-bottom"></div> -->
+            <div class="column col-1">
+                <div class="inner">
+                    <div class="item">
+                        <div class="user-info">
+                            <img src="https://picsum.photos/id/237/200/300" alt="Jane Doe" class="user-image">
+                            <div class="user-details">
+                                <div class="user-name">Jane Doe</div>
+                                <div class="user-email">jane@techcorp.com</div>
+                            </div>
+                        </div>
+                        <p class="review-text">"This team transformed our vision into a stunning website. Their
+                            creativity and
+                            attention to detail were exceptional!"</p>
+                        <!-- <div class="rating">★★★★★</div> -->
+                    </div>
+                    <div class="item">
+                        <div class="user-info">
+                            <img src="https://picsum.photos/id/237/200/300" alt="John Smith" class="user-image">
+                            <div class="user-details">
+                                <div class="user-name">John Smith</div>
+                                <div class="user-email">john@startup.com</div>
+                            </div>
+                        </div>
+                        <p class="review-text">"Working with them was a breeze. They delivered on time and exceeded our
+                            expectations."</p>
+                        <!-- <div class="rating">★★★★★</div> -->
+                    </div>
+                    <div class="item">
+                        <div class="user-info">
+                            <img src="https://picsum.photos/id/237/200/300" alt="Emily Brown" class="user-image">
+                            <div class="user-details">
+                                <div class="user-name">Emily Brown</div>
+                                <div class="user-email">emily@marketing.com</div>
+                            </div>
+                        </div>
+                        <p class="review-text">"I couldn’t be happier with the results. The new design has significantly
+                            boosted our
+                            online presence."</p>
+                        <!-- <div class="rating">★★★★★</div> -->
+                    </div>
+                    <div class="item">
+                        <div class="user-info">
+                            <img src="https://picsum.photos/id/237/200/300" alt="Jane Doe" class="user-image">
+                            <div class="user-details">
+                                <div class="user-name">Jane Doe</div>
+                                <div class="user-email">jane@techcorp.com</div>
+                            </div>
+                        </div>
+                        <p class="review-text">"This team transformed our vision into a stunning website. Their
+                            creativity and
+                            attention to detail were exceptional!"</p>
+                        <!-- <div class="rating">★★★★★</div> -->
+                    </div>
+                    <div class="item">
+                        <div class="user-info">
+                            <img src="https://picsum.photos/id/237/200/300" alt="John Smith" class="user-image">
+                            <div class="user-details">
+                                <div class="user-name">John Smith</div>
+                                <div class="user-email">john@startup.com</div>
+                            </div>
+                        </div>
+                        <p class="review-text">"Working with them was a breeze. They delivered on time and exceeded our
+                            expectations."</p>
+                        <!-- <div class="rating">★★★★★</div> -->
+                    </div>
+                    <div class="item">
+                        <div class="user-info">
+                            <img src="https://picsum.photos/id/237/200/300" alt="Emily Brown" class="user-image">
+                            <div class="user-details">
+                                <div class="user-name">Emily Brown</div>
+                                <div class="user-email">emily@marketing.com</div>
+                            </div>
+                        </div>
+                        <p class="review-text">"I couldn’t be happier with the results. The new design has significantly
+                            boosted our
+                            online presence."</p>
+                        <!-- <div class="rating">★★★★★</div> -->
+                    </div>
+                </div>
+            </div>
+            <div class="column col-2">
+                <div class="inner">
+                    <div class="item">
+                        <div class="user-info">
+                            <img src="https://picsum.photos/id/237/200/300" alt="Michael Lee" class="user-image">
+                            <div class="user-details">
+                                <div class="user-name">Michael Lee</div>
+                                <div class="user-email">michael@innovate.com</div>
+                            </div>
+                        </div>
+                        <p class="review-text">"Their expertise in web development is unmatched. Our site is now faster
+                            and more
+                            user-friendly."</p>
+                        <!-- <div class="rating">★★★★★</div> -->
+                    </div>
+                    <div class="item">
+                        <div class="user-info">
+                            <img src="https://picsum.photos/id/237/200/300" alt="Sarah Johnson" class="user-image">
+                            <div class="user-details">
+                                <div class="user-name">Sarah Johnson</div>
+                                <div class="user-email">sarah@products.com</div>
+                            </div>
+                        </div>
+                        <p class="review-text">"The revamp was seamless, and the results speak for themselves. Highly
+                            recommend!"
+                        </p>
+                        <!-- <div class="rating">★★★★★</div> -->
+                    </div>
+                    <div class="item">
+                        <div class="user-info">
+                            <img src="https://picsum.photos/id/237/200/300" alt="David Kim" class="user-image">
+                            <div class="user-details">
+                                <div class="user-name">David Kim</div>
+                                <div class="user-email">david@entrepreneur.com</div>
+                            </div>
+                        </div>
+                        <p class="review-text">"They took our ideas and turned them into something extraordinary.
+                            Amazing work!"</p>
+                        <!-- <div class="rating">★★★★★</div> -->
+                    </div>
+                    <div class="item">
+                        <div class="user-info">
+                            <img src="https://picsum.photos/id/237/200/300" alt="Michael Lee" class="user-image">
+                            <div class="user-details">
+                                <div class="user-name">Michael Lee</div>
+                                <div class="user-email">michael@innovate.com</div>
+                            </div>
+                        </div>
+                        <p class="review-text">"Their expertise in web development is unmatched. Our site is now faster
+                            and more
+                            user-friendly."</p>
+                        <!-- <div class="rating">★★★★★</div> -->
+                    </div>
+                    <div class="item">
+                        <div class="user-info">
+                            <img src="https://picsum.photos/id/237/200/300" alt="Sarah Johnson" class="user-image">
+                            <div class="user-details">
+                                <div class="user-name">Sarah Johnson</div>
+                                <div class="user-email">sarah@products.com</div>
+                            </div>
+                        </div>
+                        <p class="review-text">"The revamp was seamless, and the results speak for themselves. Highly
+                            recommend!"
+                        </p>
+                        <!-- <div class="rating">★★★★★</div> -->
+                    </div>
+                    <div class="item">
+                        <div class="user-info">
+                            <img src="https://picsum.photos/id/237/200/300" alt="David Kim" class="user-image">
+                            <div class="user-details">
+                                <div class="user-name">David Kim</div>
+                                <div class="user-email">david@entrepreneur.com</div>
+                            </div>
+                        </div>
+                        <p class="review-text">"They took our ideas and turned them into something extraordinary.
+                            Amazing work!"</p>
+                        <!-- <div class="rating">★★★★★</div> -->
+                    </div>
+                </div>
+            </div>
+            <div class="column col-3">
+                <div class="inner">
+                    <div class="item">
+                        <div class="user-info">
+                            <img src="https://picsum.photos/id/237/200/300" alt="Lisa Chen" class="user-image">
+                            <div class="user-details">
+                                <div class="user-name">Lisa Chen</div>
+                                <div class="user-email">lisa@creative.com</div>
+                            </div>
+                        </div>
+                        <p class="review-text">"A fantastic experience from start to finish. Our new website looks
+                            incredible!"</p>
+                        <!-- <div class="rating">★★★★★</div> -->
+                    </div>
+                    <div class="item">
+                        <div class="user-info">
+                            <img src="https://picsum.photos/id/237/200/300" alt="Mark Wilson" class="user-image">
+                            <div class="user-details">
+                                <div class="user-name">Mark Wilson</div>
+                                <div class="user-email">mark@business.com</div>
+                            </div>
+                        </div>
+                        <p class="review-text">"Their professionalism and dedication were evident in every step of the
+                            process."</p>
+                        <!-- <div class="rating">★★★★★</div> -->
+                    </div>
+                    <div class="item">
+                        <div class="user-info">
+                            <img src="https://picsum.photos/id/237/200/300" alt="Anna Taylor" class="user-image">
+                            <div class="user-details">
+                                <div class="user-name">Anna Taylor</div>
+                                <div class="user-email">anna@marketing.com</div>
+                            </div>
+                        </div>
+                        <p class="review-text">"The best decision we made was hiring them. Our online engagement has
+                            soared!"</p>
+                        <!-- <div class="rating">★★★★★</div> -->
+                    </div>
+                    <div class="item">
+                        <div class="user-info">
+                            <img src="https://picsum.photos/id/237/200/300" alt="Lisa Chen" class="user-image">
+                            <div class="user-details">
+                                <div class="user-name">Lisa Chen</div>
+                                <div class="user-email">lisa@creative.com</div>
+                            </div>
+                        </div>
+                        <p class="review-text">"A fantastic experience from start to finish. Our new website looks
+                            incredible!"</p>
+                        <!-- <div class="rating">★★★★★</div> -->
+                    </div>
+                    <div class="item">
+                        <div class="user-info">
+                            <img src="https://picsum.photos/id/237/200/300" alt="Mark Wilson" class="user-image">
+                            <div class="user-details">
+                                <div class="user-name">Mark Wilson</div>
+                                <div class="user-email">mark@business.com</div>
+                            </div>
+                        </div>
+                        <p class="review-text">"Their professionalism and dedication were evident in every step of the
+                            process."</p>
+                        <!-- <div class="rating">★★★★★</div> -->
+                    </div>
+                    <div class="item">
+                        <div class="user-info">
+                            <img src="https://picsum.photos/id/237/200/300" alt="Anna Taylor" class="user-image">
+                            <div class="user-details">
+                                <div class="user-name">Anna Taylor</div>
+                                <div class="user-email">anna@marketing.com</div>
+                            </div>
+                        </div>
+                        <p class="review-text">"The best decision we made was hiring them. Our online engagement has
+                            soared!"</p>
+                        <!-- <div class="rating">★★★★★</div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- faq section -->
+    <div class="container">
+        <div class="faq-container">
+            <div class="faq-left">
+                <h2 class="faq-title">
+                    Frequently Asked<br />
+                    <span class="faq-highlight">Questions</span>
+                </h2>
+                <p class="faq-subtext">
+                    Read what community members are saying about us✨.
+                </p>
+            </div>
+            <div class="faq-right">
+                <details class="faq-item">
+                    <summary>Why not just hire a full-time designer?</summary>
+                    <div class="faq-answer">
+                        Hiring a full-time designer can be costly and may not suit your needs if you only require
+                        occasional design work. Our service provides flexibility, allowing you to access professional
+                        design support on-demand without the overhead of a full-time employee.
+                    </div>
+                </details>
+                <details class="faq-item">
+                    <summary>How do we request designs?</summary>
+                    <div class="faq-answer">
+                        You can request designs through our online portal. Simply submit your project details, and our
+                        team will get started. You'll receive updates and can provide feedback throughout the process.
+                    </div>
+                </details>
+                <details class="faq-item">
+                    <summary>Is there a limit to how many requests we can make?</summary>
+                    <div class="faq-answer">
+                        Depending on your subscription plan, there may be a limit to the number of active requests at a
+                        time. However, you can queue as many requests as you'd like, and we'll work through them in
+                        order.
+                    </div>
+                </details>
+                <details class="faq-item">
+                    <summary>How fast will we receive our designs?</summary>
+                    <div class="faq-answer">
+                        Turnaround time depends on the complexity of the request, but most designs are delivered within
+                        48-72 hours. Urgent requests can be prioritized with a faster delivery option.
+                    </div>
+                </details>
+                <details class="faq-item">
+                    <summary>What kind of design work is included?</summary>
+                    <div class="faq-answer">
+                        We cover a wide range of design work, including UI/UX, branding, marketing materials, social
+                        media graphics, and more. If you're unsure, reach out, and we'll confirm if your request is
+                        within scope.
+                    </div>
+                </details>
+                <details class="faq-item">
+                    <summary>Do you use AI in your design process?</summary>
+                    <div class="faq-answer">
+                        Yes, we leverage AI tools to streamline certain aspects of the design process, such as
+                        generating initial concepts or optimizing workflows. However, all final designs are crafted and
+                        reviewed by human designers to ensure quality.
+                    </div>
+                </details>
+                <details class="faq-item">
+                    <summary>Can we request designs for multiple brands or products?</summary>
+                    <div class="faq-answer">
+                        Absolutely! You can request designs for multiple brands or products. Just specify the brand
+                        guidelines or requirements for each request, and we'll ensure consistency across your projects.
+                    </div>
+                </details>
+                <details class="faq-item">
+                    <summary>What tools do you use?</summary>
+                    <div class="faq-answer">
+                        Our team uses industry-standard tools like Figma, Adobe Creative Suite (Photoshop, Illustrator,
+                        etc.), Sketch, and others depending on the project requirements.
+                    </div>
+                </details>
+                <details class="faq-item">
+                    <summary>Do you offer development or code?</summary>
+                    <div class="faq-answer">
+                        We primarily focus on design, but we can provide design files in formats compatible with
+                        development (e.g., Figma exports). For coding or development services, we recommend partnering
+                        with a developer.
+                    </div>
+                </details>
+            </div>
+        </div>
+    </div>
+    <!-- Footer Section Start -->
+    <div class="container">
+        <footer class="footer-section">
+            <div class="footer-container">
+                <div class="footer-left">
+                    <!-- <h4>Your Portfolio</h4> -->
+                    <div class="footer-left">
+                      <h4>Your Portfolio</h4>
+                      <h2 class="footer-heading">Built in Minutes, Not Months</h2>
+                      <p class="footer-subtext">Ditch the drag-and-drop headaches and endless CSS tweaks.</p>
+                    </div>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-x-twitter"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <!-- <a href="#"><i class="fab fa-discord"></i></a> -->
+                        <!-- <a href="#"><i class="fab fa-circle-notch"></i></a>  -->
+                        <a href="#"><i class="fab fa-github"></i></a>
+                        <!-- <a href="#"><i class="fab fa-pinterest-p"></i></a> -->
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="footer-right">
+                    <div class="footer-links">
+                        <h4>Important links</h4>
+                        <ul>
+                            <li>Link no 1</li>
+                            <li>Link no 2</li>
+                            <li>Link no 3</li>
+                            <li>Link no 4</li>
+                        </ul>
+                    </div>
+                    <!-- <div class="footer-links">
+                        <h4>Important links</h4>
+                        <ul>
+                            <li>Link no 1</li>
+                            <li>Link no 2</li>
+                            <li>Link no 3</li>
+                            <li>Link no 4</li>
+                        </ul>
+                    </div> -->
+                </div>
+            </div>
+
+
+            <div class="footer-bottom">
+                <p>© 2025 Dhruvin Dave, All rights Reserved. | Disclaimer</p>
+                <div class="policy-links">
+                    <a href="#">Privacy Policy</a> | <a href="#">Privacy Policy</a>
+                </div>
+            </div>
+
+
+            <div class="footer-bg-text">BuildMyFolio</div>
+        </footer>
+    </div>
+    <script>
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 10) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const faqItems = document.querySelectorAll('.faq-item');
+
+
+            faqItems.forEach(item => {
+                item.addEventListener('mouseenter', () => {
+                    // Close all other items
+                    faqItems.forEach(otherItem => {
+                        if (otherItem !== item) {
+                            otherItem.removeAttribute('open');
+                        }
+                    });
+                    // Open the hovered item
+                    item.setAttribute('open', '');
+                });
+            });
+        });
+
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const cardsContainer = document.querySelector(".pdf-cards");
+            const cards = document.querySelectorAll(".pdf-card");
+            const dotsContainer = document.getElementById("pdfDots");
+
+
+            // Create dots
+            cards.forEach((_, index) => {
+                const dot = document.createElement("span");
+                if (index === 0) dot.classList.add("active");
+                dotsContainer.appendChild(dot);
+            });
+
+
+            const dots = dotsContainer.querySelectorAll("span");
+
+
+            function updateActiveDot() {
+                const scrollLeft = cardsContainer.scrollLeft;
+                const cardWidth = cards[0].offsetWidth + parseFloat(getComputedStyle(cardsContainer).gap || 16); // account for gap
+                const index = Math.round(scrollLeft / cardWidth);
+
+
+                dots.forEach(dot => dot.classList.remove("active"));
+                if (dots[index]) dots[index].classList.add("active");
+            }
+
+
+            cardsContainer.addEventListener("scroll", () => {
+                window.requestAnimationFrame(updateActiveDot);
+            });
+        });
+    </script>
+</body>
+
+
+</html>
